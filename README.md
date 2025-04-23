@@ -23,12 +23,11 @@ project/
 
 
 ## Installation
-```bash
-git clone https://github.com/yourusername/rl-car-demo.git
-cd rl-car-demo
+# For minimal installation (core requirements only):
 pip install -r requirements.txt
-Usage
-```
+
+# For full installation (including visualization):
+pip install -r requirements.txt matplotlib tensorboard
 1. Training the Model:
 
 bash
