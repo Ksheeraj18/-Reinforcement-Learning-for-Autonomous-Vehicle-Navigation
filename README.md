@@ -1,52 +1,83 @@
-README.md
+# Autonomous Vehicle Navigation using Deep Reinforcement Learning
 
-# Autonomous Vehicle Obstacle Avoidance using Reinforcement Learning
+This project implements an autonomous vehicle navigation system using Deep Q-Network (DQN) reinforcement learning. The system learns to navigate a vehicle from a starting point to a goal position while avoiding obstacles in a grid-based environment.
 
-## Project Overview
-A PyTorch + PyGame implementation of a self-learning car that navigates through dynamically generated obstacles using Deep Q-Learning (DQN).
+## Overview
 
-## Key Features
-- 🚗 Vehicle control via neural network (steer left/right/straight)
-- 🧠 Double DQN architecture with experience replay
-- 🎮 Interactive GUI for real-time demonstration
-- ⚡ GPU-accelerated training (CUDA support)
+The agent learns through reinforcement learning to make intelligent navigation decisions, receiving rewards for reaching the goal and penalties for colliding with obstacles or taking unnecessary steps. The project uses PyTorch for the neural network implementation and Matplotlib for visualization.
 
-## File Structure
-project/
-├── models/ # Saved model weights
-├── src/
-│ ├── train.py # Training script
-│ └── demo.py # Demonstration GUI
-├── assets/ # Graphical assets
-├── requirements.txt # Dependencies
-└── README.md # This file
+## Features
 
+- Custom grid-based environment with adjustable complexity
+- Deep Q-Network (DQN) agent with experience replay
+- Real-time visualization using Matplotlib
+- Multiple operation modes: training, demo, and interactive
+- GPU acceleration support for faster training
+- Configurable reward system and neural network architecture
 
-## Installation
-# For minimal installation (core requirements only):
-pip install -r requirements.txt
+## Project Structure
 
-# For full installation (including visualization):
-pip install -r requirements.txt matplotlib tensorboard
-1. Training the Model:
+- `agent.py`: Implementation of the DQN agent
+- `environment.py`: Definition of the navigation environment
+- `gui.py`: Visualization interface
+- `training.py`: Training loop logic
+- `main.py`: Main entry point with argument parsing
 
-bash
-python src/train.py
-(Press Ctrl+C to stop training when rewards stabilize)
+## Requirements
 
-2. Running the Demo:
+See `requirements.txt` for a list of dependencies.
 
-bash
-python src/demo.py
-(Click anywhere to add obstacles)
+## Usage
 
-Technical Specifications
-State Space: 5 dimensions (normalized positions + speed)
+### Training the Model
 
-Action Space: 3 discrete actions (left/right/straight)
+To train a new model:
 
-Reward Function:
+```bash
+python main.py --mode train --episodes 1000
+```
 
+This will train the agent for 1000 episodes and save the model as `final_model.pt`.
 
-reward = survival_bonus - center_penalty - collision_penalty
-Neural Network: 3-layer MLP (128 units/layer)
+### Running a Demo
+
+To run a demonstration using a trained model:
+
+```bash
+python main.py --mode demo --load_model final_model.pt
+```
+
+### Interactive Mode
+
+To run in interactive mode where obstacles are randomly added during navigation:
+
+```bash
+python main.py --mode interactive --load_model final_model.pt
+```
+
+## Command Line Arguments
+
+- `--mode`: Operating mode (train, demo, interactive)
+- `--episodes`: Number of episodes for training
+- `--load_model`: Path to a pre-trained model file
+
+## How It Works
+
+1. **Environment**: A grid environment with the vehicle, goal, and obstacles
+2. **State**: Vehicle position, goal position, and distance sensor readings in 8 directions
+3. **Actions**: Move up, right, down, or left
+4. **Rewards**:
+   - +100 for reaching the goal
+   - -10 for hitting an obstacle
+   - -0.1 for each step (encourages efficiency)
+
+5. **Neural Network**: A 3-layer fully connected network that maps states to Q-values
+6. **Learning Algorithm**: DQN with experience replay and epsilon-greedy exploration
+
+## Training Results
+
+The training script generates a graph showing episode scores and average scores over time, saved as `training_results.png`.
+
+## License
+
+[MIT License](LICENSE)
