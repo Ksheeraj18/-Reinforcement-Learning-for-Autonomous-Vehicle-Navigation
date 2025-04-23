@@ -1,0 +1,15 @@
+# Core Requirements
+torch==2.3.1+cu118  # CUDA 11.8 version for GTX 1650
+torchvision==0.18.1+cu118
+pygame==2.6.1
+numpy==1.26.4
+tensorboard==2.16.2  # For training visualization
+
+# Development Extras (Optional)
+matplotlib==3.8.4  # For plotting training curves
+opencv-python==4.9.0.80  # For potential future vision inputs
+gymnasium==0.29.1  # If extending to standard RL environments
+
+# Compatibility Notes:
+# Requires Python 3.8-3.11
+# CUDA 11.8 drivers recommended for NVIDIA GPUs
